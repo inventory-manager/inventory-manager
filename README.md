@@ -1,2 +1,2 @@
-# inventory-manager
+# inventory-manager [![Build Status](https://travis-ci.org/inventory-manager/inventory-manager.svg?branch=master)](https://travis-ci.org/inventory-manager/inventory-manager)[![StyleCI](https://styleci.io/repos/46257313/shield)](https://styleci.io/repos/46257313)[![Coverage Status](https://coveralls.io/repos/inventory-manager/inventory-manager/badge.svg?branch=master&service=github)](https://coveralls.io/github/inventory-manager/inventory-manager?branch=master)
 Inventory management system with PHP and Polymer
