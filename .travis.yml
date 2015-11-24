@@ -11,4 +11,8 @@ before_script:
   - php app/console doctrine:fixtures:load -n --env=test
 
 script:
-  - phpunit -c app
+  - mkdir -p build/logs
+  - phpunit -c app --verbose --coverage-text --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php bin/coveralls -v
