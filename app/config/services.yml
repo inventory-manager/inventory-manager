@@ -11,3 +11,7 @@ services:
         class: AppBundle\Converter\TestModelConverter
         tags:
             - { name: request.param_converter, priority: -2, converter: test_model_converter }
+    json_exception_listener:
+        class: AppBundle\Listener\JsonExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 200 }
