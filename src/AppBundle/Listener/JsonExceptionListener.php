@@ -26,6 +26,6 @@ class JsonExceptionListener
                 'message' => $exception->getMessage()
             ]
         ];
-        $event->setResponse(new JsonResponse($data, $exception->getCode()));
+        $event->setResponse(new JsonResponse($data, $exception->getCode() == 0 ? 500 : $exception->getCode()));
     }
 }
