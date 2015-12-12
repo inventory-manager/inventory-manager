@@ -309,7 +309,7 @@ class Device implements \JsonSerializable
     /**
      * @ORM\PrePersist
      */
-    protected function prePersist()
+    public function prePersist()
     {
         $this->createdDate = new \DateTime();
         $this->editedDate = new \DateTime();
@@ -318,7 +318,7 @@ class Device implements \JsonSerializable
     /**
      * @ORM\PreUpdate
      */
-    protected function preUpdate()
+    public function preUpdate()
     {
         $this->editedDate = new \DateTime();
     }

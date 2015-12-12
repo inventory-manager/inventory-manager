@@ -299,7 +299,7 @@ class User implements \JsonSerializable, UserInterface
     /**
      * @ORM\PrePersist
      */
-    protected function prePersist()
+    public function prePersist()
     {
         $this->createdDate = new \DateTime();
         $this->editedDate = new \DateTime();
@@ -308,7 +308,7 @@ class User implements \JsonSerializable, UserInterface
     /**
      * @ORM\PreUpdate
      */
-    protected function preUpdate()
+    public function preUpdate()
     {
         $this->editedDate = new \DateTime();
     }
