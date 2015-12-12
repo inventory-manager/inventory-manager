@@ -323,6 +323,8 @@ class User implements \JsonSerializable, UserInterface
             'email'       => $this->email,
             'createdBy'   => $this->createdBy,
             'editedBy'    => $this->editedBy,
+            'createdDate' => $this->createdDate,
+            'editedDate'  => $this->editedDate,
             'roles'       => $this->roles->toArray()
         ];
     }
