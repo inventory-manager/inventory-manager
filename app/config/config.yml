@@ -69,7 +69,14 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        auto_mapping: false
+        mappings:
+            name:
+                prefix: AppBundle\Models
+                type: annotation
+                dir: %kernel.root_dir%/../src/AppBundle/Models
+                alias: AppBundle
+                is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -78,3 +85,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    request:
+        converters: true
+        auto_convert: false
