@@ -58,9 +58,9 @@ class User implements \JsonSerializable, UserInterface
     protected $email;
 
     /**
-     * @ORM\Column(name="password", type="string", length=40, nullable=false))
+     * @ORM\Column(name="password", type="string", length=60, nullable=false))
      * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=40)
+     * @Assert\Length(min=5, max=60)
      * @var string
      */
     protected $password;
