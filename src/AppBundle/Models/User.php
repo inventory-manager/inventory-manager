@@ -67,16 +67,12 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $createdDate;
 
     /**
      * @ORM\Column(name="edited_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $editedDate;
@@ -117,17 +113,18 @@ class User implements \JsonSerializable, UserInterface
     /**
      * User-factory
      *
+     * @param int $id
      * @param string $username
      * @param string $firstName
      * @param string $lastName
      * @param string $email
      * @param string $password
-     *
      * @return User
      */
-    public static function createUser($username, $firstName, $lastName, $email, $password)
+    public static function createUser($id, $username, $firstName, $lastName, $email, $password)
     {
         $user = new User();
+        $user->id = $id;
         $user->username = $username;
         $user->firstName = $firstName;
         $user->lastName = $lastName;

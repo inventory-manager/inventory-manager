@@ -11,7 +11,14 @@ services:
         class: AppBundle\Converter\TestModelConverter
         tags:
             - { name: request.param_converter, priority: -2, converter: test_model_converter }
+    user_converter:
+        class: AppBundle\Converter\UserConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: user_converter }
     json_exception_listener:
         class: AppBundle\Listener\JsonExceptionListener
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 200 }
+    user_manager:
+        class: AppBundle\Manager\UserManager
+        arguments: ["@doctrine.orm.default_entity_manager", "@validator", "@security.user_password_encoder.generic", "@security.token_storage"]

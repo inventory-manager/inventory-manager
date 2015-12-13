@@ -22,6 +22,14 @@ $ composer install
 (Konfigurationsdaten für DB-Verbindung angeben)
 ```
 
+### Einrichtung der Datenbank
+```
+($ app/console doctrine:database:drop --force)
+$ app/console doctrine:database:create
+$ app/console doctrine:schema:create
+$ app/console doctrine:fixtures:load
+```
+
 ### Starten des Entwicklungswebservers
 ```
 $ app/console server:run
