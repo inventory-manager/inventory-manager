@@ -58,9 +58,9 @@ class User implements \JsonSerializable, UserInterface
     protected $email;
 
     /**
-     * @ORM\Column(name="password", type="string", length=40, nullable=false))
+     * @ORM\Column(name="password", type="string", length=60, nullable=false))
      * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=40)
+     * @Assert\Length(min=5, max=60)
      * @var string
      */
     protected $password;
@@ -277,7 +277,13 @@ class User implements \JsonSerializable, UserInterface
      */
     public function getRoles()
     {
-        return $this->roles;
+        // Workaround für Frameworkbug
+        $roles = array();
+        foreach ($this->roles as $role) {
+            $roles[] = $role->getRole();
+        }
+
+        return $roles;
     }
 
     /**
@@ -299,7 +305,7 @@ class User implements \JsonSerializable, UserInterface
     /**
      * @ORM\PrePersist
      */
-    protected function prePersist()
+    public function prePersist()
     {
         $this->createdDate = new \DateTime();
         $this->editedDate = new \DateTime();
@@ -308,7 +314,7 @@ class User implements \JsonSerializable, UserInterface
     /**
      * @ORM\PreUpdate
      */
-    protected function preUpdate()
+    public function preUpdate()
     {
         $this->editedDate = new \DateTime();
     }
@@ -323,6 +329,8 @@ class User implements \JsonSerializable, UserInterface
             'email'       => $this->email,
             'createdBy'   => $this->createdBy,
             'editedBy'    => $this->editedBy,
+            'createdDate' => $this->createdDate,
+            'editedDate'  => $this->editedDate,
             'roles'       => $this->roles->toArray()
         ];
     }
