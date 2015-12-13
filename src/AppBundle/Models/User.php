@@ -277,7 +277,13 @@ class User implements \JsonSerializable, UserInterface
      */
     public function getRoles()
     {
-        return $this->roles;
+        // Workaround für Frameworkbug
+        $roles = array();
+        foreach ($this->roles as $role) {
+            $roles[] = $role->getRole();
+        }
+
+        return $roles;
     }
 
     /**

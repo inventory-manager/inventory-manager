@@ -4,6 +4,8 @@ namespace AppBundle\Listener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
 /**
  * Class JsonExceptionListener
@@ -20,6 +22,12 @@ class JsonExceptionListener
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
+
+        // Bei fehlender Authentifizierung in geschütztem Bereich Exception nach 401 konvertieren
+        if ($exception instanceof AuthenticationCredentialsNotFoundException) {
+            $exception = new UnauthorizedHttpException("", "Unauthorized", null, 401);
+        }
+
         $data = [
             'error' => [
                 'code' => $exception->getCode(),
