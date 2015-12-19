@@ -22,7 +22,7 @@ class LoadDefaultFixtures implements FixtureInterface
         $manager->persist($adminRole);
 
         $userRole = new Role();
-        $userRole->setName('USER_ROLE');
+        $userRole->setName('ROLE_USER');
         $userRole->setDescription('Benutzer');
         $manager->persist($userRole);
 

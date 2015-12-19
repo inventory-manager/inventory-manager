@@ -15,6 +15,7 @@ services:
         class: AppBundle\Converter\UserConverter
         tags:
             - { name: request.param_converter, priority: -2, converter: user_converter }
+        arguments: ["@doctrine.orm.entity_manager"]
     json_exception_listener:
         class: AppBundle\Listener\JsonExceptionListener
         tags:

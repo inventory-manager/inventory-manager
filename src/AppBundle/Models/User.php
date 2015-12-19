@@ -97,6 +97,10 @@ class User implements \JsonSerializable, UserInterface
      *   joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="role_name", referencedColumnName="role_name")}
      * )
+     * @Assert\Count(
+     *   min = "1",
+     *   minMessage = "Der Benutzer muss mindestens einer Rolle zugewiesen werden.",
+     * )
      * @var Role[]
      */
     protected $roles;
@@ -283,6 +287,14 @@ class User implements \JsonSerializable, UserInterface
     }
 
     /**
+     * @return Role
+     */
+    public function getCurrentRole()
+    {
+        return $this->roles->first();
+    }
+
+    /**
      * @param Role $role
      */
     public function addToRoles(Role $role)
@@ -296,6 +308,15 @@ class User implements \JsonSerializable, UserInterface
     public function removeFromRoles(Role $role)
     {
         $this->roles->removeElement($role);
+    }
+
+    /**
+     * @param Role $role
+     */
+    public function setRole(Role $role)
+    {
+        $this->roles->clear();
+        $this->roles->add($role);
     }
 
     /**

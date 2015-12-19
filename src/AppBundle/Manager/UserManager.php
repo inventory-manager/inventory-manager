@@ -137,6 +137,10 @@ class UserManager
         $encoded = $this->passwordEncoder->encodePassword($oldUser, $updatedUser->getPassword());
         $oldUser->setPassword($encoded);
 
+        if ($updatedUser->getCurrentRole()) {
+            $oldUser->setRole($updatedUser->getCurrentRole());
+        }
+
         $oldUser->setEditedBy($this->tokenStorage->getToken()->getUser());
 
         $errors = $this->validator->validate($oldUser);
