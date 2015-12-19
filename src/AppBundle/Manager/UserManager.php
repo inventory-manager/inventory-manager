@@ -138,7 +138,7 @@ class UserManager
             );
         }
 
-        if ($updatedUser->getId() !== $this->tokenStorage->getToken()->getUser()->getId() &&
+        if ($oldUser->getId() !== $this->tokenStorage->getToken()->getUser()->getId() &&
             !$this->authorizationChecker->isGranted('ROLE_ADMIN')
         ) {
             throw new AccessDeniedException('Keine ausreichenden Berechtigungen.');
