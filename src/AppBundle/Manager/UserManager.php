@@ -7,7 +7,9 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -33,6 +35,10 @@ class UserManager
      * @var TokenStorage
      */
     private $tokenStorage;
+    /**
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
 
     /**
      * UserManager constructor.
@@ -40,17 +46,20 @@ class UserManager
      * @param ValidatorInterface $validator
      * @param UserPasswordEncoder $encoder
      * @param TokenStorage $tokenStorage
+     * @param AuthorizationChecker $authorizationChecker
      */
     public function __construct(
         EntityManager $entityManager,
         ValidatorInterface $validator,
         UserPasswordEncoder $encoder,
-        TokenStorage $tokenStorage
+        TokenStorage $tokenStorage,
+        AuthorizationChecker $authorizationChecker
     ) {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->passwordEncoder = $encoder;
         $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -129,6 +138,12 @@ class UserManager
             );
         }
 
+        if ($updatedUser->getId() !== $this->tokenStorage->getToken()->getUser()->getId() &&
+            !$this->authorizationChecker->isGranted('ROLE_ADMIN')
+        ) {
+            throw new AccessDeniedException('Keine ausreichenden Berechtigungen.');
+        }
+
         $oldUser->setUsername($updatedUser->getUsername());
         $oldUser->setFirstName($updatedUser->getFirstName());
         $oldUser->setLastName($updatedUser->getLastName());
@@ -139,8 +154,10 @@ class UserManager
             $oldUser->setPassword($encoded);
         }
 
-        if ($updatedUser->getCurrentRole()) {
-            $oldUser->setRole($updatedUser->getCurrentRole());
+        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            if ($updatedUser->getCurrentRole()) {
+                $oldUser->setRole($updatedUser->getCurrentRole());
+            }
         }
 
         $oldUser->setEditedBy($this->tokenStorage->getToken()->getUser());
