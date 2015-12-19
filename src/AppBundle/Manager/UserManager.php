@@ -139,7 +139,7 @@ class UserManager
 
         $oldUser->setEditedBy($this->tokenStorage->getToken()->getUser());
 
-        $errors = $this->validator->validate($updatedUser);
+        $errors = $this->validator->validate($oldUser);
 
         if ($errors->count() === 0) {
             $this->entityManager->persist($oldUser);
