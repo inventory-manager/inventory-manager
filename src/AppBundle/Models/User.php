@@ -345,7 +345,7 @@ class User implements \JsonSerializable, UserInterface
             'editedBy'    => $this->editedBy != null ? $this->editedBy->username : '?',
             'createdDate' => $this->createdDate->format('d.m.Y-H:i:s'),
             'editedDate'  => $this->editedDate->format('d.m.Y-H:i:s'),
-            'roles'       => $this->roles->toArray()
+            'role'        => $this->roles->first()
         ];
     }
 
