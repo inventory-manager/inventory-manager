@@ -37,6 +37,9 @@ class LoadDefaultFixtures implements FixtureInterface
             '$2y$13$R2aqy59kAEV0YczhMmrN3.JDTzg4/2JC41HLFxFikB2.VD8B5NFK2' // admin
         );
         $superAdmin->addToRoles($adminRole);
+
+        $superAdmin->setCreatedBy($superAdmin);
+        $superAdmin->setEditedBy($superAdmin);
         $manager->persist($superAdmin);
 
         $manager->flush();
