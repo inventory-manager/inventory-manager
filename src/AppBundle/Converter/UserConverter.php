@@ -32,7 +32,14 @@ class UserConverter implements ParamConverterInterface
     {
         $decoded = json_decode($request->getContent(), true);
 
-        $user = User::createUser(isset($decoded['id']) ? $decoded['id'] : null, $decoded['username'], $decoded['firstName'], $decoded['lastName'], $decoded['email'], $decoded['password']);
+        $user = User::createUser(
+            isset($decoded['id']) ? $decoded['id'] : null,
+            $decoded['username'],
+            $decoded['firstName'],
+            $decoded['lastName'],
+            $decoded['email'],
+            isset($decoded['password']) ? $decoded['password'] : null
+        );
         if (isset($decoded['role'])) {
             $role = $this->entityManager->find('AppBundle:Role', $decoded['role']);
             if ($role !== null) {

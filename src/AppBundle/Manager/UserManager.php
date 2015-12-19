@@ -134,8 +134,10 @@ class UserManager
         $oldUser->setLastName($updatedUser->getLastName());
         $oldUser->setEmail($updatedUser->getEmail());
 
-        $encoded = $this->passwordEncoder->encodePassword($oldUser, $updatedUser->getPassword());
-        $oldUser->setPassword($encoded);
+        if ($updatedUser->getPassword() !== null) {
+            $encoded = $this->passwordEncoder->encodePassword($oldUser, $updatedUser->getPassword());
+            $oldUser->setPassword($encoded);
+        }
 
         if ($updatedUser->getCurrentRole()) {
             $oldUser->setRole($updatedUser->getCurrentRole());
