@@ -323,10 +323,10 @@ class User implements \JsonSerializable, UserInterface
             'firstName'   => $this->firstName,
             'lastName'    => $this->lastName,
             'email'       => $this->email,
-            'createdBy'   => $this->createdBy,
-            'editedBy'    => $this->editedBy,
-            'createdDate' => $this->createdDate,
-            'editedDate'  => $this->editedDate,
+            'createdBy'   => $this->createdBy != null ? $this->createdBy->username : '?',
+            'editedBy'    => $this->editedBy != null ? $this->editedBy->username : '?',
+            'createdDate' => $this->createdDate->format('d.m.Y-H:i:s'),
+            'editedDate'  => $this->editedDate->format('d.m.Y-H:i:s'),
             'roles'       => $this->roles->toArray()
         ];
     }
