@@ -34,7 +34,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="first_name", type="string", length=32, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Length(max=32)
      * @var string
      */
@@ -42,7 +41,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="last_name", type="string", length=32, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Length(max=32)
      * @var string
      */
@@ -50,7 +48,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="email", type="string", length=40, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Email
      * @Assert\Length(max=40)
      * @var string
