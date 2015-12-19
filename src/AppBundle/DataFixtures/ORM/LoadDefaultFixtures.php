@@ -42,6 +42,21 @@ class LoadDefaultFixtures implements FixtureInterface
         $superAdmin->setEditedBy($superAdmin);
         $manager->persist($superAdmin);
 
+        // User erstellen
+        $user = User::createUser(
+            null,
+            'user',
+            'us',
+            'er',
+            'user@user.com',
+            '$2y$05$sKaS99Shc5p9.hKthB886ed7fTlT4yhPs9KAtaYymj6j.2lWy0aqa' // user
+        );
+        $user->addToRoles($userRole);
+
+        $user->setCreatedBy($superAdmin);
+        $user->setEditedBy($superAdmin);
+        $manager->persist($user);
+
         $manager->flush();
     }
 }
