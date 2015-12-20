@@ -88,14 +88,13 @@ class ArticleController extends Controller
      */
     public function deleteArticlesAction(Article $toBeDeletedArticle)
     {
-
         $this->get('article_manager')->deleteArticle($toBeDeletedArticle);
 
         return new JsonResponse($toBeDeletedArticle, 200);
     }
 
     /**
-     * @Route("/articles", name="create_Article")
+     * @Route("/articles", name="create_article")
      * @Method({"POST"})
      * @ParamConverter("newArticle", class="AppBundle:Article", converter="article_converter")
      * @param Article $newArticle
