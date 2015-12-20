@@ -175,8 +175,7 @@ class RoomType implements \JsonSerializable
     {
         return [
             'id'          => $this->id,
-            'description' => $this->description,
-            'rooms'       => $this->rooms->toArray()
+            'description' => $this->description
         ];
     }
 }
