@@ -41,6 +41,11 @@ class ArticleConverter implements ParamConverterInterface
 
         $article = new Article();
         $article->setArticleNumber($decoded['articleNumber']);
+        if (!isset($decoded['oldArticleNumber'])) {
+            $article->setOldArticleNumber($decoded['articleNumber']);
+        } else {
+            $article->setOldArticleNumber($decoded['oldArticleNumber']);
+        }
         $article->setName($decoded['name']);
         $article->setComment($decoded['comment']);
         $article->setDescription($decoded['description']);

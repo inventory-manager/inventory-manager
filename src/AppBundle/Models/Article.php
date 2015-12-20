@@ -89,6 +89,11 @@ class Article implements \JsonSerializable
     protected $devices;
 
     /**
+     * @var string
+     */
+    protected $oldArticleNumber;
+
+    /**
      * Article constructor.
      */
     public function __construct()
@@ -230,6 +235,22 @@ class Article implements \JsonSerializable
     public function getEditedBy()
     {
         return $this->editedBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOldArticleNumber()
+    {
+        return $this->oldArticleNumber;
+    }
+
+    /**
+     * @param string $oldArticleNumber
+     */
+    public function setOldArticleNumber($oldArticleNumber)
+    {
+        $this->oldArticleNumber = $oldArticleNumber;
     }
 
     /**
