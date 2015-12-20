@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Models\Role;
+use AppBundle\Models\RoomType;
 use AppBundle\Models\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -56,6 +57,27 @@ class LoadDefaultFixtures implements FixtureInterface
         $user->setCreatedBy($superAdmin);
         $user->setEditedBy($superAdmin);
         $manager->persist($user);
+
+
+        // RoomTypes erstellen
+        $classRoom = new RoomType();
+        $classRoom->setCreatedBy($superAdmin);
+        $classRoom->setEditedBy($superAdmin);
+        $classRoom->setDescription('Klassenraum');
+        $manager->persist($classRoom);
+
+        $serverRoom = new RoomType();
+        $serverRoom->setCreatedBy($superAdmin);
+        $serverRoom->setEditedBy($superAdmin);
+        $serverRoom->setDescription('Serverraum');
+        $manager->persist($serverRoom);
+
+        $storeRoom = new RoomType();
+        $storeRoom->setCreatedBy($superAdmin);
+        $storeRoom->setEditedBy($superAdmin);
+        $storeRoom->setDescription('Abstellraum');
+        $manager->persist($storeRoom);
+
 
         $manager->flush();
     }
