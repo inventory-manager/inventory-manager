@@ -65,16 +65,12 @@ class Device implements \JsonSerializable
 
     /**
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $createdDate;
 
     /**
      * @ORM\Column(name="edited_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $editedDate;
@@ -113,6 +109,31 @@ class Device implements \JsonSerializable
      * @var Room
      */
     protected $room;
+
+    /**
+     * Device-factory
+     *
+     * @param int $id
+     * @param string $serialNumber
+     * @param string $inventoryNumber
+     * @param \DateTime $buyDate
+     * @param \DateTime $dueDate
+     * @param bool $inUse
+     * @param string $comment
+     * @return Device
+     */
+    public static function createDevice($id, $serialNumber, $inventoryNumber, $buyDate, $dueDate, $inUse, $comment)
+    {
+        $device = new Device();
+        $device->id = $id;
+        $device->serialNumber = $serialNumber;
+        $device->inventoryNumber = $inventoryNumber;
+        $device->buyDate = $buyDate;
+        $device->dueDate = $dueDate;
+        $device->inUse = $inUse;
+        $device->comment = $comment;
+        return $device;
+    }
 
     /**
      * @return int
@@ -256,6 +277,14 @@ class Device implements \JsonSerializable
     public function setRoom($room)
     {
         $this->room = $room;
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
     }
 
     /**

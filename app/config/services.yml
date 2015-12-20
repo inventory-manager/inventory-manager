@@ -21,6 +21,11 @@ services:
         tags:
             - { name: request.param_converter, priority: -2, converter: room_converter }
         arguments: ["@doctrine.orm.entity_manager"]
+    device_converter:
+        class: AppBundle\Converter\DeviceConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: device_converter }
+        arguments: ["@doctrine.orm.entity_manager"]
     article_converter:
         class: AppBundle\Converter\ArticleConverter
         tags:
@@ -35,6 +40,9 @@ services:
         arguments: ["@doctrine.orm.default_entity_manager", "@validator", "@security.user_password_encoder.generic", "@security.token_storage", "@security.authorization_checker"]
     room_manager:
         class: AppBundle\Manager\RoomManager
+        arguments: ["@doctrine.orm.default_entity_manager", "@validator", "@security.token_storage", "@security.authorization_checker"]
+    device_manager:
+        class: AppBundle\Manager\DeviceManager
         arguments: ["@doctrine.orm.default_entity_manager", "@validator", "@security.token_storage", "@security.authorization_checker"]
     article_manager:
         class: AppBundle\Manager\ArticleManager
