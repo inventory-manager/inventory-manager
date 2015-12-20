@@ -2,6 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Models\ArticleCategory;
 use AppBundle\Models\Role;
 use AppBundle\Models\RoomType;
 use AppBundle\Models\User;
@@ -78,6 +79,30 @@ class LoadDefaultFixtures implements FixtureInterface
         $storeRoom->setDescription('Abstellraum');
         $manager->persist($storeRoom);
 
+        // Article Category Types
+        $newCat = new ArticleCategory();
+        $newCat->setCreatedBy($superAdmin);
+        $newCat->setEditedBy($superAdmin);
+        $newCat->setDescription('Monitor');
+        $manager->persist($newCat);
+
+        $newCat = new ArticleCategory();
+        $newCat->setCreatedBy($superAdmin);
+        $newCat->setEditedBy($superAdmin);
+        $newCat->setDescription('PC');
+        $manager->persist($newCat);
+
+        $newCat = new ArticleCategory();
+        $newCat->setCreatedBy($superAdmin);
+        $newCat->setEditedBy($superAdmin);
+        $newCat->setDescription('Peripheriegeräte');
+        $manager->persist($newCat);
+
+        $newCat = new ArticleCategory();
+        $newCat->setCreatedBy($superAdmin);
+        $newCat->setEditedBy($superAdmin);
+        $newCat->setDescription('Kabel');
+        $manager->persist($newCat);
 
         $manager->flush();
     }
