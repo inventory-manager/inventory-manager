@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Models\ArticleCategory;
+use AppBundle\Models\DeviceState;
 use AppBundle\Models\Role;
 use AppBundle\Models\RoomType;
 use AppBundle\Models\User;
@@ -103,6 +104,18 @@ class LoadDefaultFixtures implements FixtureInterface
         $newCat->setEditedBy($superAdmin);
         $newCat->setDescription('Kabel');
         $manager->persist($newCat);
+
+        $defectState = new DeviceState();
+        $defectState->setDescription('Defekt');
+        $manager->persist($defectState);
+
+        $fullyFunctionalState = new DeviceState();
+        $fullyFunctionalState->setDescription('Voll funktionsfähig');
+        $manager->persist($fullyFunctionalState);
+
+        $partyDefectState = new DeviceState();
+        $partyDefectState->setDescription('Bischen kaputt');
+        $manager->persist($partyDefectState);
 
         $manager->flush();
     }

@@ -6,6 +6,7 @@ use AppBundle\Models\Article;
 use AppBundle\Models\Device;
 use AppBundle\Models\DeviceState;
 use AppBundle\Models\Room;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
@@ -42,16 +43,25 @@ class DeviceConverter implements ParamConverterInterface
             throw new \InvalidArgumentException('Device konnte nicht erstellt werden, fehlende Parameter', 400);
         }
 
-        $device = Device::createDevice($decoded['id'], $decoded['serialNumber'], $decoded['inventoryNumber'],
-            $decoded['buyDate'], $decoded['dueDate'], $decoded['inUse'], $decoded['comment']);
+        $device = Device::createDevice(
+            $decoded['id'],
+            $decoded['serialNumber'],
+            $decoded['inventoryNumber'],
+            new DateTime($decoded['buyDate']),
+            new DateTime($decoded['dueDate']),
+            $decoded['inUse'],
+            $decoded['comment']
+        );
 
         /** @var DeviceState $state */
         $state = $this->entityManager->find('AppBundle:DeviceState', $decoded['state']);
         if ($state !== null) {
             $device->setDeviceState($state);
         } else {
-            throw new \InvalidArgumentException('Devicestate ' . $decoded['state'] . ' konnte nicht gefunden werden',
-                400);
+            throw new \InvalidArgumentException(
+                'Devicestate ' . $decoded['state'] . ' konnte nicht gefunden werden',
+                400
+            );
         }
 
         /** @var Room $room */
@@ -67,7 +77,10 @@ class DeviceConverter implements ParamConverterInterface
         if ($room !== null) {
             $device->setArticle($article);
         } else {
-            throw new \InvalidArgumentException('Article ' . $decoded['article'] . ' konnte nicht gefunden werden', 400);
+            throw new \InvalidArgumentException(
+                'Article ' . $decoded['article'] . ' konnte nicht gefunden werden',
+                400
+            );
         }
 
         $request->attributes->set($configuration->getName(), $device);

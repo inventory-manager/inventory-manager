@@ -31,7 +31,7 @@ class ArticleController extends Controller
         return new JsonResponse($articles);
     }
     /**
-     * @Route("/articleCats", name="get_all_article_categories")
+     * @Route("/articlecats", name="get_all_article_categories")
      * @Method({"GET"})
      * @return JsonResponse
      */
