@@ -80,7 +80,7 @@ class ArticleManager
     }
 
     /**
-     * @return ArticleCategories[]
+     * @return ArticleCategory[]
      */
     public function getAllArticleCategories()
     {

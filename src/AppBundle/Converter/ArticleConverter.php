@@ -34,15 +34,14 @@ class ArticleConverter implements ParamConverterInterface
     {
         $decoded = json_decode($request->getContent(), true);
 
-        if (!isset($decoded['article_number']) || !isset($decoded['category']) || !isset($decoded['name'])
+        if (!isset($decoded['articleNumber']) || !isset($decoded['category']) || !isset($decoded['name'])
             || !isset($decoded['description']) || !isset($decoded['comment'])) {
             throw new \InvalidArgumentException('Artikel konnte nicht erstellt werden, fehlende Parameter', 400);
         }
 
         $article = new Article();
-        $article->setArticleNumber($decoded['article_number']);
+        $article->setArticleNumber($decoded['articleNumber']);
         $article->setName($decoded['name']);
-
         $article->setComment($decoded['comment']);
         $article->setDescription($decoded['description']);
 
@@ -50,6 +49,11 @@ class ArticleConverter implements ParamConverterInterface
         $artCat = $this->entityManager->find('AppBundle:ArticleCategory', $decoded['category']);
         if ($artCat !== null) {
             $article->setCategory($artCat);
+        } else {
+            throw new \InvalidArgumentException(
+                'Kategorie ' . $decoded['category'] . ' konnte nicht gefunden werden',
+                400
+            );
         }
 
         $request->attributes->set($configuration->getName(), $article);

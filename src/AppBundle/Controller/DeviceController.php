@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Exception\ValidatorException;
 class DeviceController extends Controller
 {
     /**
-     * @Route("/devices", name="get_all_device")
+     * @Route("/devices", name="get_all_devices")
      * @Method({"GET"})
      * @return JsonResponse
      */
