@@ -24,16 +24,12 @@ class Room implements \JsonSerializable
 
     /**
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $createdDate;
 
     /**
      * @ORM\Column(name="edited_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $editedDate;
@@ -71,6 +67,10 @@ class Room implements \JsonSerializable
      * @var User
      */
     protected $user;
+    /**
+     * @var string
+     */
+    protected $oldRoomNumber;
 
     /**
      * Room constructor.
@@ -182,6 +182,22 @@ class Room implements \JsonSerializable
     public function setEditedBy($editedBy)
     {
         $this->editedBy = $editedBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOldRoomNumber()
+    {
+        return $this->oldRoomNumber;
+    }
+
+    /**
+     * @param string $oldRoomNumber
+     */
+    public function setOldRoomNumber($oldRoomNumber)
+    {
+        $this->oldRoomNumber = $oldRoomNumber;
     }
 
     /**
