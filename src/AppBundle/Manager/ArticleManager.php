@@ -127,7 +127,7 @@ class ArticleManager
     public function updateArticle(Article $updatedArticle)
     {
         /** @var Article $oldArticle */
-        $oldArticle = $this->entityManager->find('AppBundle:Article', $updatedArticle->getArticleNumber());
+        $oldArticle = $this->entityManager->find('AppBundle:Article', $updatedArticle->getOldArticleNumber());
 
         if ($oldArticle === null) {
             throw new ResourceNotFoundException(
