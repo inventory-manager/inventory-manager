@@ -89,7 +89,7 @@ class Room implements \JsonSerializable
     }
 
     /**
-     * @return ArticleCategory
+     * @return RoomType
      */
     public function getType()
     {
@@ -105,7 +105,7 @@ class Room implements \JsonSerializable
     }
 
     /**
-     * @param ArticleCategory $type
+     * @param RoomType $type
      */
     public function setType($type)
     {
@@ -206,8 +206,11 @@ class Room implements \JsonSerializable
         return [
             'roomNumber' => $this->roomNumber,
             'type'       => $this->type,
-            'devices'    => $this->devices->toArray(),
-            'user'       => $this->user
+            'user'       => $this->user,
+            'createdBy'   => $this->createdBy != null ? $this->createdBy->getUsername() : '?',
+            'editedBy'    => $this->editedBy != null ? $this->editedBy->getUsername() : '?',
+            'createdDate' => $this->createdDate->format('d.m.Y-H:i:s'),
+            'editedDate'  => $this->editedDate->format('d.m.Y-H:i:s'),
         ];
     }
 }
