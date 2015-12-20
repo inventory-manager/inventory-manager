@@ -34,12 +34,17 @@ class ArticleConverter implements ParamConverterInterface
     {
         $decoded = json_decode($request->getContent(), true);
 
-        if (!isset($decoded['article_number']) || !isset($decoded['category'])) {
+        if (!isset($decoded['article_number']) || !isset($decoded['category']) || !isset($decoded['name'])
+            || !isset($decoded['description']) || !isset($decoded['comment'])) {
             throw new \InvalidArgumentException('Artikel konnte nicht erstellt werden, fehlende Parameter', 400);
         }
 
         $article = new Article();
         $article->setArticleNumber($decoded['article_number']);
+        $article->setName($decoded['name']);
+
+        $article->setComment($decoded['comment']);
+        $article->setDescription($decoded['description']);
 
         /** @var ArticleCategory $artCat */
         $artCat = $this->entityManager->find('AppBundle:ArticleCategory', $decoded['category']);
