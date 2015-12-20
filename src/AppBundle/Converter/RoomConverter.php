@@ -34,17 +34,32 @@ class RoomConverter implements ParamConverterInterface
     {
         $decoded = json_decode($request->getContent(), true);
 
-        if (!isset($decoded['roomNumber']) || !isset($decoded['type'])) {
+        if (!isset($decoded['roomNumber']) || !isset($decoded['type']) || !isset($decoded['user'])) {
             throw new \InvalidArgumentException('Raum konnte nicht erstellt werden, fehlende Parameter', 400);
         }
 
         $room = new Room();
         $room->setRoomNumber($decoded['roomNumber']);
+        if (!isset($decoded['oldRoomNumber'])) {
+            $room->setOldRoomNumber($decoded['roomNumber']);
+        } else {
+            $room->setOldRoomNumber($decoded['oldRoomNumber']);
+        }
 
         /** @var RoomType $type */
         $type = $this->entityManager->find('AppBundle:RoomType', $decoded['type']);
         if ($type !== null) {
             $room->setType($type);
+        } else {
+            throw new \InvalidArgumentException('Raumtyp ' . $decoded['type'] . ' konnte nicht gefunden werden', 400);
+        }
+
+        /** @var User $user */
+        $user = $this->entityManager->find('AppBundle:User', $decoded['user']);
+        if ($user !== null) {
+            $room->setUser($user);
+        } else {
+            throw new \InvalidArgumentException('User ' . $decoded['user'] . ' konnte nicht gefunden werden', 400);
         }
 
         $request->attributes->set($configuration->getName(), $room);

@@ -128,17 +128,18 @@ class RoomManager
     public function updateRoom(Room $updatedRoom)
     {
         /** @var Room $oldRoom */
-        $oldRoom = $this->entityManager->find('AppBundle:Rppm', $updatedRoom->getId());
+        $oldRoom = $this->entityManager->find('AppBundle:Room', $updatedRoom->getOldRoomNumber());
 
         if ($oldRoom === null) {
             throw new ResourceNotFoundException(
-                'Raum mit der id=' . $updatedRoom->getId() . ' wurde nicht gefunden.',
+                'Raum mit der id=' . $updatedRoom->getRoomNumber() . ' wurde nicht gefunden.',
                 404
             );
         }
 
         $oldRoom->setRoomNumber($updatedRoom->getRoomNumber());
         $oldRoom->setType($updatedRoom->getType());
+        $oldRoom->setUser($updatedRoom->getUser());
 
         $oldRoom->setEditedBy($this->tokenStorage->getToken()->getUser());
 

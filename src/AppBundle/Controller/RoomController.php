@@ -88,7 +88,7 @@ class RoomController extends Controller
      * @param Room $toBeDeletedRoom
      * @return JsonResponse
      */
-    public function deleteUserAction(Room $toBeDeletedRoom)
+    public function deleteRoomAction(Room $toBeDeletedRoom)
     {
         $this->get('room_manager')->deleteRoom($toBeDeletedRoom);
 
@@ -96,7 +96,7 @@ class RoomController extends Controller
     }
 
     /**
-     * @Route("/users", name="create_user")
+     * @Route("/rooms", name="create_room")
      * @Method({"POST"})
      * @ParamConverter("newRoom", class="AppBundle:Room", converter="room_converter")
      * @param Room $newRoom
