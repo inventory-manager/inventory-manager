@@ -34,7 +34,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="first_name", type="string", length=32, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Length(max=32)
      * @var string
      */
@@ -42,7 +41,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="last_name", type="string", length=32, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Length(max=32)
      * @var string
      */
@@ -50,7 +48,6 @@ class User implements \JsonSerializable, UserInterface
 
     /**
      * @ORM\Column(name="email", type="string", length=40, nullable=false)
-     * @Assert\NotBlank()
      * @Assert\Email
      * @Assert\Length(max=40)
      * @var string
@@ -58,9 +55,8 @@ class User implements \JsonSerializable, UserInterface
     protected $email;
 
     /**
-     * @ORM\Column(name="password", type="string", length=60, nullable=false))
+     * @ORM\Column(name="password", type="string", length=64, nullable=false))
      * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=60)
      * @var string
      */
     protected $password;
@@ -97,6 +93,10 @@ class User implements \JsonSerializable, UserInterface
      *   name="users_roles",
      *   joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="role_name", referencedColumnName="role_name")}
+     * )
+     * @Assert\Count(
+     *   min = "1",
+     *   minMessage = "Der Benutzer muss mindestens einer Rolle zugewiesen werden.",
      * )
      * @var Role[]
      */
@@ -284,6 +284,14 @@ class User implements \JsonSerializable, UserInterface
     }
 
     /**
+     * @return Role
+     */
+    public function getCurrentRole()
+    {
+        return $this->roles->first();
+    }
+
+    /**
      * @param Role $role
      */
     public function addToRoles(Role $role)
@@ -297,6 +305,15 @@ class User implements \JsonSerializable, UserInterface
     public function removeFromRoles(Role $role)
     {
         $this->roles->removeElement($role);
+    }
+
+    /**
+     * @param Role $role
+     */
+    public function setRole(Role $role)
+    {
+        $this->roles->clear();
+        $this->roles->add($role);
     }
 
     /**
@@ -324,11 +341,11 @@ class User implements \JsonSerializable, UserInterface
             'firstName'   => $this->firstName,
             'lastName'    => $this->lastName,
             'email'       => $this->email,
-            'createdBy'   => $this->createdBy,
-            'editedBy'    => $this->editedBy,
-            'createdDate' => $this->createdDate,
-            'editedDate'  => $this->editedDate,
-            'roles'       => $this->roles->toArray()
+            'createdBy'   => $this->createdBy != null ? $this->createdBy->username : '?',
+            'editedBy'    => $this->editedBy != null ? $this->editedBy->username : '?',
+            'createdDate' => $this->createdDate->format('d.m.Y-H:i:s'),
+            'editedDate'  => $this->editedDate->format('d.m.Y-H:i:s'),
+            'role'        => $this->roles->first()
         ];
     }
 

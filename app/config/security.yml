@@ -4,18 +4,14 @@ security:
     role_hierarchy:
         ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
+    providers:
+        user_db:
+            entity: { class: AppBundle\Models\User, property: username }
+
     encoders:
         AppBundle\Models\User:
             algorithm: bcrypt
-
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
-    providers:
-        our_db_provider:
-            entity:
-                class: AppBundle:User
-                property: username
-                # if you're using multiple entity managers
-                # manager_name: customer
+            cost: 5
 
     firewalls:
         login_firewall:
@@ -34,7 +30,6 @@ security:
             logout:
                 path:   /logout
                 target: /
-            provider: our_db_provider
             context: default_context
 
         # disables authentication for assets and the profiler, adapt it according to your needs
