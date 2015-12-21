@@ -47,16 +47,12 @@ class Article implements \JsonSerializable
 
     /**
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $createdDate;
 
     /**
      * @ORM\Column(name="edited_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $editedDate;
@@ -278,6 +274,10 @@ class Article implements \JsonSerializable
             'name'          => $this->name,
             'comment'       => $this->comment,
             'category'      => $this->category,
+            'createdBy'   => $this->createdBy != null ? $this->createdBy->getUsername() : '?',
+            'editedBy'    => $this->editedBy != null ? $this->editedBy->getUsername() : '?',
+            'createdDate' => $this->createdDate->format('d.m.Y-H:i:s'),
+            'editedDate'  => $this->editedDate->format('d.m.Y-H:i:s')
         ];
     }
 }

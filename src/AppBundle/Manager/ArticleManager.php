@@ -138,6 +138,9 @@ class ArticleManager
 
         $oldArticle->setArticleNumber($updatedArticle->getArticleNumber());
         $oldArticle->setCategory($updatedArticle->getCategory());
+        $oldArticle->setName($updatedArticle->getName());
+        $oldArticle->setComment($updatedArticle->getComment());
+        $oldArticle->setDescription($updatedArticle->getDescription());
 
         $oldArticle->setEditedBy($this->tokenStorage->getToken()->getUser());
 
