@@ -37,14 +37,14 @@ class Device implements \JsonSerializable
     protected $inventoryNumber;
 
     /**
-     * @ORM\Column(name="buy_date", type="datetime")
+     * @ORM\Column(name="buy_date", type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var \DateTime
      */
     protected $buyDate;
 
     /**
-     * @ORM\Column(name="due_date", type="datetime")
+     * @ORM\Column(name="due_date", type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var \DateTime
      */
@@ -358,12 +358,17 @@ class Device implements \JsonSerializable
             'id'              => $this->id,
             'serialNumber'    => $this->serialNumber,
             'inventoryNumber' => $this->inventoryNumber,
-            'buyDate'         => $this->buyDate,
-            'dueDate'         => $this->dueDate,
+            'buyDate'         => $this->buyDate !== null ? $this->buyDate->format('d.m.Y-H:i:s') : '',
+            'dueDate'         => $this->dueDate !== null ? $this->dueDate->format('d.m.Y-H:i:s') : '',
             'inUse'           => $this->inUse,
             'comment'         => $this->comment,
             'deviceState'     => $this->deviceState,
-            'article'         => $this->article
+            'article'         => $this->article,
+            'room'            => $this->room,
+            'createdBy'       => $this->createdBy != null ? $this->createdBy->getUsername() : '?',
+            'editedBy'        => $this->editedBy != null ? $this->editedBy->getUsername() : '?',
+            'createdDate'     => $this->createdDate->format('d.m.Y-H:i:s'),
+            'editedDate'      => $this->editedDate->format('d.m.Y-H:i:s'),
         ];
     }
 }

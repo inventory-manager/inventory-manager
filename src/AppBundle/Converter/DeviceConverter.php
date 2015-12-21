@@ -36,7 +36,7 @@ class DeviceConverter implements ParamConverterInterface
     {
         $decoded = json_decode($request->getContent(), true);
 
-        if (!isset($decoded['id']) || !isset($decoded['serialNumber']) || !isset($decoded['inventoryNumber']) ||
+        if (!isset($decoded['serialNumber']) || !isset($decoded['inventoryNumber']) ||
             !isset($decoded['buyDate']) || !isset($decoded['dueDate']) || !isset($decoded['inUse']) ||
             !isset($decoded['comment']) || !isset($decoded['state']) || !isset($decoded['room']) ||
             !isset($decoded['article'])) {
@@ -44,11 +44,11 @@ class DeviceConverter implements ParamConverterInterface
         }
 
         $device = Device::createDevice(
-            $decoded['id'],
+            isset($decoded['id']) ? $decoded['id'] : null,
             $decoded['serialNumber'],
             $decoded['inventoryNumber'],
-            new DateTime($decoded['buyDate']),
-            new DateTime($decoded['dueDate']),
+            $decoded['buyDate'] != '' ? DateTime::createFromFormat('d.m.Y-H:i:s', $decoded['buyDate']) : null,
+            $decoded['dueDate'] != '' ? DateTime::createFromFormat('d.m.Y-H:i:s', $decoded['dueDate']) : null,
             $decoded['inUse'],
             $decoded['comment']
         );
@@ -74,7 +74,7 @@ class DeviceConverter implements ParamConverterInterface
 
         /** @var Article $article */
         $article = $this->entityManager->find('AppBundle:Article', $decoded['article']);
-        if ($room !== null) {
+        if ($article !== null) {
             $device->setArticle($article);
         } else {
             throw new \InvalidArgumentException(
