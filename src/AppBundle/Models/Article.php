@@ -47,16 +47,12 @@ class Article implements \JsonSerializable
 
     /**
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $createdDate;
 
     /**
      * @ORM\Column(name="edited_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @var \DateTime
      */
     protected $editedDate;
