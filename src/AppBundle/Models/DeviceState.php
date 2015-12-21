@@ -175,8 +175,7 @@ class DeviceState implements \JsonSerializable
     {
         return [
             'id'          => $this->id,
-            'description' => $this->description,
-            'devices'     => $this->devices->toArray()
+            'description' => $this->description
         ];
     }
 }

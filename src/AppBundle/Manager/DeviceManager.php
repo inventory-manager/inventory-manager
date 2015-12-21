@@ -85,7 +85,7 @@ class DeviceManager
      */
     public function getAllDeviceStates()
     {
-        return $this->entityManager->getRepository('AppBundle:DeviceStates')->findAll();
+        return $this->entityManager->getRepository('AppBundle:DeviceState')->findAll();
     }
 
     /**
@@ -143,6 +143,9 @@ class DeviceManager
         $oldDevice->setDueDate($updatedDevice->getDueDate());
         $oldDevice->setInUse($updatedDevice->isInUse());
         $oldDevice->setComment($updatedDevice->getComment());
+        $oldDevice->setArticle($updatedDevice->getArticle());
+        $oldDevice->setDeviceState($updatedDevice->getDeviceState());
+        $oldDevice->setRoom($updatedDevice->getRoom());
 
         $oldDevice->setEditedBy($this->tokenStorage->getToken()->getUser());
 
